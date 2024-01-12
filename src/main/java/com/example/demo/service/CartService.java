@@ -1,8 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.client.ProductServiceFeignClient;
-import com.example.demo.entity.Cart;
-import com.example.demo.entity.CartProduct;
+import com.example.demo.model.entity.Cart;
 import com.example.demo.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,13 +21,14 @@ public class CartService {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
 
-        Long productID = productServiceFeignClient.getProductInfo(productId);
+        String productInfo = productServiceFeignClient.getProductInfo(productId);
+        Long productID = Long.parseLong(productInfo);
 
-        CartProduct cartProduct = new CartProduct();
-        cartProduct.setCart(cart);
-        cartProduct.setId(productID);
+        if (cart.getProductIds().contains(productID)) {
+            throw new RuntimeException("Product already added to the cart");
+        }
 
-        cart.getCartProducts().add(cartProduct);
+        cart.getProductIds().add(productID);
         return cartRepository.save(cart);
     }
 
