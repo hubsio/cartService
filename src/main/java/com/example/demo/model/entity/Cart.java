@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +16,8 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToMany(mappedBy = "cart")
-    private List<CartProduct> cartProducts = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "cart_product_ids", joinColumns = @JoinColumn(name = "cart_id"))
+    @Column(name = "product_id")
+    private List<Long> productIds = new ArrayList<>();
 }
