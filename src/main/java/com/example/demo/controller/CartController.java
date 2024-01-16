@@ -21,8 +21,13 @@ public class CartController {
         return cartService.addProductToCart(cartId, productId);
     }
 
+//    @GetMapping("/{cartId}")
+//    public Cart viewCart(@PathVariable Long cartId) {
+//        return cartService.viewCart(cartId);
+//    }
+
     @GetMapping("/{cartId}")
-    public Cart viewCart(@PathVariable Long cartId) {
-        return cartService.viewCart(cartId);
+    public Long getCart(@PathVariable Long cartId) {
+        return cartService.getCartById(cartId);
     }
 }
