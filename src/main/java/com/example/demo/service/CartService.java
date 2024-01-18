@@ -50,7 +50,31 @@ public class CartService {
         }
 
         cart.getProductIds().add(productID);
+
         log.info("Product with ID {} successfully added to the cart with ID {}", productId, cartId);
+        return cartRepository.save(cart);
+    }
+
+    @Transactional
+    public Cart addAccessoryToCart(Long cartId, Long accessoryId) {
+        log.info("Adding accessory with ID {} to cart with ID {}", accessoryId, cartId);
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new CartNotFoundException("Cart not found"));
+
+        validateCartStatus(cart);
+        Optional<Long> accessoryInfo = productServiceFeignClient.getAccessoryInfo(accessoryId);
+        if (accessoryInfo.isEmpty()) {
+            throw new ProductNotFoundException("Accessory not found");
+        }
+
+        Long accessoryID = accessoryInfo.get();
+        if (cart.getAccessoryIds().contains(accessoryID)) {
+            throw new RuntimeException("Accessory already added to the cart");
+        }
+
+        cart.getAccessoryIds().add(accessoryID);
+
+        log.info("Accessory with ID {} successfully added to the cart with ID {}", accessoryId, cartId);
         return cartRepository.save(cart);
     }
 

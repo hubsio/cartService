@@ -16,18 +16,18 @@ public class CartController {
         return cartService.createCart();
     }
 
-    @PutMapping("/{cartId}/add/{productId}")
+    @PutMapping("/{cartId}/addProduct/{productId}")
     public Cart addProductToCart(@PathVariable Long cartId, @PathVariable Long productId) {
         return cartService.addProductToCart(cartId, productId);
     }
 
-//    @GetMapping("/{cartId}")
-//    public Cart viewCart(@PathVariable Long cartId) {
-//        return cartService.viewCart(cartId);
-//    }
+    @PutMapping("/{cartId}/addAccessory/{accessoryId}")
+    public Cart addAccessoryToCart(@PathVariable Long cartId, @PathVariable Long accessoryId) {
+        return cartService.addAccessoryToCart(cartId, accessoryId);
+    }
 
     @GetMapping("/{cartId}")
-    public Long getCart(@PathVariable Long cartId) {
-        return cartService.getCartById(cartId);
+    public Cart viewCart(@PathVariable Long cartId) {
+        return cartService.viewCart(cartId);
     }
 }
