@@ -1,4 +1,4 @@
-package com.example.demo.model.entity;
+package com.example.demo.dto;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Embeddable
 public class ProductInfo {
     private Long id;
     private String name;
