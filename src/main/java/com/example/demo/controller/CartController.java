@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.entity.Cart;
+import com.example.demo.dto.ProductInfo;
 import com.example.demo.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
     private final CartService cartService;
 
-    @PostMapping("/create")
+    @PostMapping
     public Cart createCart() {
         return cartService.createCart();
     }
 
-    @PutMapping("/{cartId}/add/{productId}")
-    public Cart addProductToCart(@PathVariable Long cartId, @PathVariable Long productId) {
+    @PutMapping("/{cartId}/product/{productId}")
+    public ProductInfo addProductToCart(@PathVariable Long cartId, @PathVariable Long productId) {
         return cartService.addProductToCart(cartId, productId);
     }
 

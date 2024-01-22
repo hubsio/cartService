@@ -20,4 +20,16 @@ public class GeneralExceptionHandler {
         log.error("Product not found: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(CompletedCartModificationException.class)
+    public ResponseEntity<String> handleCompletedCartModificationException(CompletedCartModificationException ex) {
+        log.error("CompletedCartModificationException: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(CartModificationTimeExpiredException.class)
+    public ResponseEntity<String> handleCartModificationTimeExpiredException(CartModificationTimeExpiredException ex) {
+        log.error("CartModificationTimeExpiredException: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }
